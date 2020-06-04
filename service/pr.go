@@ -8,15 +8,15 @@ import (
 
 // PunchRecByUID 按学号获取打卡记录
 func (s *Service) PunchRecByUID(c context.Context, uid string) ([]*model.PunchRec, error) {
-	return s.dao.SelPunchRecByUID(c, uid)
+	return s.dao.QueryPunchRecByUID(c, uid)
 }
 
 // PunchRecBetween 按时间段获取打卡记录
 func (s *Service) PunchRecBetween(c context.Context, arg *model.ArgDateBetween) ([]*model.PunchRec, error) {
-	return s.dao.SelPunchRecBetween(c, arg.From, arg.To)
+	return s.dao.QueryPunchRecBetween(c, arg.From, arg.To)
 }
 
 // AddPunchRec 添加一条打卡记录
 func (s *Service) AddPunchRec(c context.Context, rec *model.PunchRec) error {
-	return s.dao.InsPunchRec(c, rec)
+	return s.dao.AddPunchRec(c, rec)
 }

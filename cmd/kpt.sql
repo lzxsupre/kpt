@@ -1,7 +1,6 @@
 use kpt;
 
 drop table if exists `scan_record`;
-
 create table if not exists `scan_record` (
     `id` int unsigned auto_increment primary key,
     `uid` char(32) not null,
@@ -18,21 +17,27 @@ insert into `scan_record`(`uid`,`cid`,`tpt`,`ctime`) values
 ('1237','','36.1','2020-06-02 08:45:32');
 
 
--- drop table if exists `user`;
+drop table if exists `user`;
+create table if not exists `user` (
+    `uid` char(32) not null,
+    `cid` char(12) not null,
+    `class_id` char(8) not null,
+    `name` varchar(12) not null,
+    `status` int(8) default 1,
+    `ctime` datetime default current_timestamp,
+    `mtime` datetime default current_timestamp on update current_timestamp,
+    primary key (`uid`),
+    unique key (`cid`)
+) engine=innodb charset=utf8mb4;
 
--- create table if not exists `user` (
---     `device_id` char(32) primary key,
---     `user_id` char(12) not null,
---     `class_id` char(8) not null,
---     `name` varchar(8) not null
--- ) engine=innodb charset=utf8mb4;
+insert into `user`(`uid`,`cid`,`class_id`,`name`) values
+('2017213058','device_id_4','08051703','傅杰'),
+('2017213053','device_id_3','08051703','高寅'),
+('2017213056','device_id_1','08051703','谢金锦'),
+('2017212576','device_id_2','08051704','王方诗');
 
--- insert into `user`(`device_id`,`user_id`,`class_id`,`name`) values
--- ('device_id_1','2017213056','08051703','谢金锦'),
--- ('device_id_2','2017212576','08051704','王方诗');
 
 drop table if exists `punch_record`;
-
 create table if not exists `punch_record` (
     `id` int(11) unsigned auto_increment primary key,
     `uid` char(12) not null,

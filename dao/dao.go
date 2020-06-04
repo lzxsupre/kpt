@@ -18,21 +18,21 @@ type Config struct {
 
 // Dao dao
 type Dao struct {
-	orm *gorm.DB
-	db  *sql.DB
-	c   *Config
+	DB *gorm.DB
+	db *sql.DB
+	c  *Config
 }
 
 // New new
 func New(c *Config) *Dao {
 	return &Dao{
-		orm: openORM(c.DSN),
-		db:  open(c.DSN),
-		c:   c,
+		DB: openORM(c.DSN),
+		db: openDB(c.DSN),
+		c:  c,
 	}
 }
 
-func open(dsn string) *sql.DB {
+func openDB(dsn string) *sql.DB {
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		panic(err)
@@ -50,7 +50,7 @@ func openORM(dsn string) *gorm.DB {
 
 // Close closes
 func (d *Dao) Close() error {
-	err1 := d.orm.Close()
+	err1 := d.DB.Close()
 	err2 := d.db.Close()
 	if err1 != nil {
 		return err1

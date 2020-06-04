@@ -39,6 +39,12 @@ func routers(e *abc.Engine) {
 	pr.POST("/punch", addPunchRec)
 	pr.GET("/punch", punchRecBetween)
 	pr.GET("/punch/:uid", punchRecByUID)
+
+	user := e.NewGroup("/auth")
+	user.GET("/user", users)
+	user.PUT("/user", updateUser)
+	user.POST("/user", addUser)
+	user.DELETE("/user", deleteUser)
 }
 
 func register(e *abc.Engine) {
