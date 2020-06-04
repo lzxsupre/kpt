@@ -5,22 +5,28 @@ import (
 	"github.com/mivinci/kpt/dao"
 )
 
-// Config is root config
-type Config struct {
-	DB *dao.Config
+// Key key
+type Key struct {
+	Secret string
 }
 
-// Global Configs
-var (
-	DBConfig = &dao.Config{}
-)
+// Config is root config
+type Config struct {
+	DB  *dao.Config
+	Key *Key
+}
+
+// // Global Configs
+// var (
+// 	DBConfig  = &dao.Config{}
+// 	KeyConfig = &Key{}
+// )
 
 // New new
 func New() *Config {
+	c := &Config{}
 	aladin.Init()
-	aladin.Watch("cmd/db.yml", DBConfig)
-
-	return &Config{
-		DB: DBConfig,
-	}
+	aladin.Watch("cmd/db.yml", &c.DB)
+	aladin.Watch("cmd/key.yml", &c.Key)
+	return c
 }

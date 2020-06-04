@@ -12,3 +12,8 @@ type ArgDateBetween struct {
 	From string `form:"from" validate:"required"`
 	To   string `form:"to" validate:"required"`
 }
+
+// ArgAuth arg
+type ArgAuth struct {
+	UID string `form:"uid"`
+}

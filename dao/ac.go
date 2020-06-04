@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	insScanRec         = "INSERT INTO scan_record(uid,cid,tpt) VALUES(?,?)"
+	insScanRec         = "INSERT INTO scan_record(uid,cid,tpt) VALUES(?,?,?)"
 	selScanRecsBetween = "SELECT uid,cid,tpt,ctime FROM scan_record WHERE ctime BETWEEN ? AND ?"
 	selScanRecByID     = "SELECT uid,cid,tpt,ctime FROM scan_record WHERE uid=?"
 )
