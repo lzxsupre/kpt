@@ -44,7 +44,7 @@
 
 - 请求方法和地址
 
-  **GET**  http://xjj.pub:8000/pr/punch/2017213056
+  **GET**  http://xjj.pub:8000/pr/punch?uid=2017213056
 
 - 返回数据示例
 

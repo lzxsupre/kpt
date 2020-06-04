@@ -33,10 +33,10 @@ func scanRec(c abc.Context) {
 
 func deleteScanRec(c abc.Context) {
 	arg := new(struct {
-		UID string `form:"uid"`
+		ID int64 `form:"id"`
 	})
 	if err := c.Bind(arg); err != nil {
 		return
 	}
-	c.JSON(nil, svc.DeleteScanRec(c, arg.UID))
+	c.JSON(nil, svc.DeleteScanRec(c, arg.ID))
 }

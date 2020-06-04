@@ -12,7 +12,7 @@ const (
 	insScanRec         = "INSERT INTO scan_record(uid,cid,tpt) VALUES(?,?,?)"
 	selScanRecsBetween = "SELECT uid,cid,tpt,ctime FROM scan_record WHERE ctime BETWEEN ? AND ?"
 	selScanRec         = "SELECT uid,cid,tpt,ctime FROM scan_record WHERE uid=?"
-	delScanRec         = "DELETE FROM scan_record WHERE uid=?"
+	delScanRec         = "DELETE FROM scan_record WHERE id=?"
 )
 
 // InsScanRec inserts
@@ -52,9 +52,9 @@ func (d *Dao) selScanRecs(c context.Context, query string, args ...interface{}) 
 }
 
 // DeleteScanRec deletes
-func (d *Dao) DeleteScanRec(c context.Context, uid string) (err error) {
-	if _, err = d.db.ExecContext(c, delScanRec, uid); err != nil {
-		log.Errorf("DeleteScanRec.ExecCtx error(%v) uid(%s)", err, uid)
+func (d *Dao) DeleteScanRec(c context.Context, id int64) (err error) {
+	if _, err = d.db.ExecContext(c, delScanRec, id); err != nil {
+		log.Errorf("DeleteScanRec.ExecCtx error(%v) uid(%d)", err, id)
 		return
 	}
 	return

@@ -23,6 +23,6 @@ func (s *Service) ScanRecBetween(c context.Context, arg *model.ArgDateBetween) (
 }
 
 // DeleteScanRec 永久删除一条门禁记录
-func (s *Service) DeleteScanRec(c context.Context, uid string) error {
-	return s.dao.DeleteScanRec(c, uid)
+func (s *Service) DeleteScanRec(c context.Context, id int64) error {
+	return s.dao.DeleteScanRec(c, id)
 }
