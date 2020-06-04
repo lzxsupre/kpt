@@ -5,10 +5,10 @@ import "github.com/mivinci/abc/time"
 // PunchRec puch record
 type PunchRec struct {
 	ID                uint      `json:"id" gorm:"auto_increment,primary_key"`
-	UID               string    `json:"uid" form:"uid" validate:"required"`
-	Name              string    `json:"name" form:"name" validate:"required"`
-	Phone             string    `json:"phone" form:"phone" validate:"required"`
-	Location          string    `json:"location" form:"location" validate:"required"`
+	UID               string    `json:"uid" form:"uid"`
+	Name              string    `json:"name" form:"name"`
+	Phone             string    `json:"phone" form:"phone"`
+	Location          string    `json:"location" form:"location"`
 	IsTemperatureOK   bool      `json:"is_temperature_ok" form:"is_temperature_ok"`
 	DidMeetHubei      bool      `json:"did_meet_hubei" form:"did_meet_hubei"`
 	HasSymptom        bool      `json:"has_symptom" form:"has_symptom"`

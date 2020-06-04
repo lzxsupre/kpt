@@ -11,14 +11,15 @@ import (
 const (
 	insScanRec         = "INSERT INTO scan_record(uid,cid,tpt) VALUES(?,?,?)"
 	selScanRecsBetween = "SELECT uid,cid,tpt,ctime FROM scan_record WHERE ctime BETWEEN ? AND ?"
-	selScanRecByID     = "SELECT uid,cid,tpt,ctime FROM scan_record WHERE uid=?"
+	selScanRec         = "SELECT uid,cid,tpt,ctime FROM scan_record WHERE uid=?"
+	delScanRec         = "DELETE FROM scan_record WHERE uid=?"
 )
 
 // InsScanRec inserts
-func (d *Dao) InsScanRec(c context.Context, uid, cid, tpt string) error {
-	if _, err := d.db.ExecContext(c, insScanRec, uid, cid, tpt); err != nil {
+func (d *Dao) InsScanRec(c context.Context, uid, cid, tpt string) (err error) {
+	if _, err = d.db.ExecContext(c, insScanRec, uid, cid, tpt); err != nil {
 		log.Errorf("InsScanRec.ExecCtx error(%v) uid(%s)", err, uid)
-		return err
+		return
 	}
 	return nil
 }
@@ -28,9 +29,9 @@ func (d *Dao) SelScanRecsBetween(c context.Context, from, to string) ([]*model.S
 	return d.selScanRecs(c, selScanRecsBetween, from, to)
 }
 
-// SelScanRecByID selects
-func (d *Dao) SelScanRecByID(c context.Context, uid string) ([]*model.ScanRec, error) {
-	return d.selScanRecs(c, selScanRecByID, uid)
+// SelScanRec selects
+func (d *Dao) SelScanRec(c context.Context, uid string) ([]*model.ScanRec, error) {
+	return d.selScanRecs(c, selScanRec, uid)
 }
 
 func (d *Dao) selScanRecs(c context.Context, query string, args ...interface{}) (ScanRecs []*model.ScanRec, err error) {
@@ -46,6 +47,15 @@ func (d *Dao) selScanRecs(c context.Context, query string, args ...interface{}) 
 			return
 		}
 		ScanRecs = append(ScanRecs, ScanRec)
+	}
+	return
+}
+
+// DeleteScanRec deletes
+func (d *Dao) DeleteScanRec(c context.Context, uid string) (err error) {
+	if _, err = d.db.ExecContext(c, delScanRec, uid); err != nil {
+		log.Errorf("DeleteScanRec.ExecCtx error(%v) uid(%s)", err, uid)
+		return
 	}
 	return
 }

@@ -6,9 +6,9 @@ import (
 	"github.com/mivinci/kpt/model"
 )
 
-// QueryPunchRecByUID selects
-func (d *Dao) QueryPunchRecByUID(c context.Context, uid string) (recs []*model.PunchRec, err error) {
-	return recs, d.DB.Where("uid=?", uid).Find(&recs).Error
+// QueryPunchRec selects
+func (d *Dao) QueryPunchRec(c context.Context, record *model.PunchRec) (recs []*model.PunchRec, err error) {
+	return recs, d.DB.Model(&model.PunchRec{}).Where(record).Find(&recs).Error
 }
 
 // QueryPunchRecBetween selects
@@ -17,6 +17,11 @@ func (d *Dao) QueryPunchRecBetween(c context.Context, from, to string) (recs []*
 }
 
 // AddPunchRec inserts
-func (d *Dao) AddPunchRec(c context.Context, rec *model.PunchRec) error {
-	return d.DB.Create(rec).Error
+func (d *Dao) AddPunchRec(c context.Context, record *model.PunchRec) error {
+	return d.DB.Create(record).Error
+}
+
+// DeletePunchRec delete
+func (d *Dao) DeletePunchRec(c context.Context, id int64) error {
+	return d.DB.Where("id=?", id).Delete(&model.PunchRec{}).Error
 }

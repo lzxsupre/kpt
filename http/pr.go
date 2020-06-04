@@ -1,19 +1,16 @@
 package http
 
 import (
-	"net/http"
-
 	"github.com/mivinci/abc"
 	"github.com/mivinci/kpt/model"
 )
 
-func punchRecByUID(c abc.Context) {
-	uid, ok := c.Params["uid"]
-	if !ok {
-		c.AbortWithStatus(http.StatusBadRequest)
+func punchRec(c abc.Context) {
+	arg := &model.PunchRec{}
+	if err := c.Bind(arg); err != nil {
 		return
 	}
-	c.JSON(svc.PunchRecByUID(c, uid))
+	c.JSON(svc.PunchRec(c, arg))
 }
 
 func punchRecBetween(c abc.Context) {
@@ -30,4 +27,14 @@ func addPunchRec(c abc.Context) {
 		return
 	}
 	c.JSON(nil, svc.AddPunchRec(c, rec))
+}
+
+func deletePunchRec(c abc.Context) {
+	arg := new(struct {
+		ID int64 `form:"id"`
+	})
+	if err := c.Bind(arg); err != nil {
+		return
+	}
+	c.JSON(nil, svc.DeletePunchRec(c, arg.ID))
 }
