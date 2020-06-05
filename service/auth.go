@@ -26,6 +26,7 @@ func (s *Service) QueryUsers(c context.Context, user *model.User) (*model.UserRe
 
 // UpdateUser 更新用户
 func (s *Service) UpdateUser(c context.Context, user *model.User) error {
+	user.Status = 1
 	return s.dao.UpdateUser(c, user)
 }
 
