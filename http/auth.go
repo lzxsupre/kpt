@@ -13,36 +13,12 @@ func token(c abc.Context) {
 	c.JSON(svc.Token(c, arg))
 }
 
-func addUser(c abc.Context) {
-	arg := &model.User{}
-	if err := c.Bind(arg); err != nil {
-		return
-	}
-	c.JSON(nil, svc.AddUser(c, arg))
-}
-
-func users(c abc.Context) {
-	arg := &model.User{}
-	if err := c.Bind(arg); err != nil {
-		return
-	}
-	c.JSON(svc.QueryUsers(c, arg))
-}
-
-func updateUser(c abc.Context) {
-	arg := &model.User{}
-	if err := c.Bind(arg); err != nil {
-		return
-	}
-	c.JSON(nil, svc.UpdateUser(c, arg))
-}
-
-func deleteUser(c abc.Context) {
+func code(c abc.Context) {
 	arg := new(struct {
-		UID string `form:"uid"`
+		Addr string `form:"addr"`
 	})
 	if err := c.Bind(arg); err != nil {
 		return
 	}
-	c.JSON(nil, svc.DeleteUser(c, arg.UID))
+	c.JSON(nil, svc.Code(c, arg.Addr))
 }

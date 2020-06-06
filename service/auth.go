@@ -2,35 +2,39 @@ package service
 
 import (
 	"context"
+	"fmt"
+	"math/rand"
+	"strconv"
+	"strings"
 
+	"github.com/mivinci/abc/ecode"
+	"github.com/mivinci/abc/log"
 	"github.com/mivinci/abc/middlewares/auth"
+	"github.com/mivinci/abc/time"
 	"github.com/mivinci/kpt/model"
 )
 
 // Token 获取新 token
 func (s *Service) Token(c context.Context, arg *model.ArgAuth) (string, error) {
-
-	return auth.NewToken(s.c.Key.Secret, arg.UID).String()
+	if !s.dao.CodeEqual(arg.Email, arg.Code) {
+		return "", ecode.CodeNotMatch
+	}
+	user, err := s.dao.QueryUser(c, &model.User{Email: arg.Email})
+	if err != nil {
+		log.Infof("user(%s) not found", arg.Email)
+		return "", ecode.UserNotFound
+	}
+	return auth.NewToken(s.c.Key.Secret, user.UID).String()
 }
 
-// AddUser 添加用户
-func (s *Service) AddUser(c context.Context, user *model.User) error {
-	user.Status = 1
-	return s.dao.AddUser(c, user)
-}
-
-// QueryUsers 获取用户
-func (s *Service) QueryUsers(c context.Context, user *model.User) (*model.UserResponse, error) {
-	return s.dao.QueryUsers(c, user)
-}
-
-// UpdateUser 更新用户
-func (s *Service) UpdateUser(c context.Context, user *model.User) error {
-	user.Status = 1
-	return s.dao.UpdateUser(c, user)
-}
-
-// DeleteUser 删除用户(禁掉用户)
-func (s *Service) DeleteUser(c context.Context, uid string) error {
-	return s.dao.DeleteUser(c, uid)
+// Code 发送邮件验证码
+func (s *Service) Code(c context.Context, addr string) error {
+	var nums [4]string
+	rand.Seed(time.Now().Unix())
+	for i, n := range rand.Perm(4) {
+		nums[i] = strconv.Itoa(n)
+	}
+	code := strings.Join(nums[:], "")
+	s.dao.CodeSet(addr, code)
+	return s.mailer.Send("验证码", fmt.Sprintf("您的验证码为 <strong>%s</strong>，10 分钟内有效，请勿转发。", code), []string{addr})
 }

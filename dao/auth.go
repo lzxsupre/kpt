@@ -1,29 +1,22 @@
 package dao
 
 import (
-	"context"
-
-	"github.com/mivinci/kpt/model"
+	"fmt"
 )
 
-// AddUser inserts
-func (d *Dao) AddUser(c context.Context, user *model.User) error {
-	return d.DB.Create(user).Error
+const (
+	keyCode = "code:%s"
+)
+
+// CodeSet sets code to cache
+func (d *Dao) CodeSet(addr, code string) {
+	d.Cache.Set(fmt.Sprintf(keyCode, addr), code, 0)
 }
 
-// UpdateUser updates
-func (d *Dao) UpdateUser(c context.Context, user *model.User) error {
-	return d.DB.Model(&model.User{}).Update(user).Where("uid=?", user.UID).Error
-}
-
-// QueryUsers selects
-func (d *Dao) QueryUsers(c context.Context, user *model.User) (res *model.UserResponse, err error) {
-	res = &model.UserResponse{}
-	err = d.DB.Model(&model.User{}).Where(user).Count(&res.Total).Find(&res.Users).Error
-	return
-}
-
-// DeleteUser deletes user
-func (d *Dao) DeleteUser(c context.Context, uid string) error {
-	return d.DB.Model(&model.User{}).Where("UID=?", uid).Update("status", 0).Error
+// CodeEqual code equals
+func (d *Dao) CodeEqual(addr, code string) bool {
+	if value := d.Cache.Get(fmt.Sprintf(keyCode, addr)); value != nil {
+		return value == code
+	}
+	return false
 }

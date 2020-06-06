@@ -19,22 +19,24 @@ insert into `scan_record`(`uid`,`cid`,`tpt`,`ctime`) values
 
 drop table if exists `user`;
 create table if not exists `user` (
+    `id` int unsigned auto_increment,
     `uid` char(32) not null,
     `cid` char(12) not null,
     `class_id` char(8) not null,
     `name` varchar(12) not null,
+    `email` varchar(64) not null,
     `status` int(8) default 1,
     `ctime` datetime default current_timestamp,
     `mtime` datetime default current_timestamp on update current_timestamp,
-    primary key (`uid`),
-    unique key (`cid`)
+    primary key (`id`),
+    unique (`cid`,`uid`,`email`)
 ) engine=innodb charset=utf8mb4;
 
-insert into `user`(`uid`,`cid`,`class_id`,`name`) values
-('2017213058','device_id_4','08051703','傅杰'),
-('2017213053','device_id_3','08051703','高寅'),
-('2017213056','device_id_1','08051703','谢金锦'),
-('2017212576','device_id_2','08051704','王方诗');
+insert into `user`(`uid`,`cid`,`class_id`,`name`,`email`) values
+('2017213058','device_id_4','08051703','傅杰','1@xjj.pub'),
+('2017213053','device_id_3','08051703','高寅','2@xjj.pub'),
+('2017213056','device_id_1','08051703','谢金锦','1366723936@qq.com'),
+('2017212576','device_id_2','08051704','王方诗','2898234819@qq.com');
 
 
 drop table if exists `punch_record`;

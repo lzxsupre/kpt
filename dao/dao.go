@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/jinzhu/gorm"
+	"github.com/mivinci/abc/cache"
 
 	// MySQL Driver
 	_ "github.com/go-sql-driver/mysql"
@@ -18,17 +19,19 @@ type Config struct {
 
 // Dao dao
 type Dao struct {
-	DB *gorm.DB
-	db *sql.DB
-	c  *Config
+	Cache *cache.Cache
+	DB    *gorm.DB
+	db    *sql.DB
+	c     *Config
 }
 
 // New new
 func New(c *Config) *Dao {
 	return &Dao{
-		DB: openORM(c.DSN),
-		db: openDB(c.DSN),
-		c:  c,
+		Cache: openCache(),
+		DB:    openORM(c.DSN),
+		db:    openDB(c.DSN),
+		c:     c,
 	}
 }
 
@@ -46,6 +49,10 @@ func openORM(dsn string) *gorm.DB {
 		panic(err)
 	}
 	return db
+}
+
+func openCache() *cache.Cache {
+	return cache.New(time.Minute * 10)
 }
 
 // Close closes
