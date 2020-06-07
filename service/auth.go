@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"github.com/mivinci/abc/ecode"
-	"github.com/mivinci/abc/log"
 	"github.com/mivinci/abc/middlewares/auth"
 	"github.com/mivinci/abc/time"
 	"github.com/mivinci/kpt/model"
@@ -21,10 +20,9 @@ func (s *Service) Token(c context.Context, arg *model.ArgAuth) (string, error) {
 	}
 	user, err := s.dao.QueryUser(c, &model.User{Email: arg.Email})
 	if err != nil {
-		log.Infof("user(%s) not found", arg.Email)
 		return "", ecode.UserNotFound
 	}
-	return auth.NewToken(s.c.Key.Secret, user.UID).String()
+	return auth.NewToken(s.c.Key.Secret, user.UID, auth.WithPerm(user.Status)).String()
 }
 
 // Code 发送邮件验证码
