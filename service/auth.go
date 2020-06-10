@@ -19,7 +19,7 @@ func (s *Service) Token(c context.Context, arg *model.ArgAuth) (string, error) {
 	if !s.dao.CodeEqual(arg.UID, arg.Code) {
 		return "", ecode.CodeNotMatch
 	}
-	user, err := s.dao.QueryUser(c, &model.User{Email: arg.UID})
+	user, err := s.dao.QueryUser(c, &model.User{UID: arg.UID})
 	if err != nil {
 		return "", ecode.UserNotFound
 	}
