@@ -8,7 +8,7 @@ import (
 
 // QueryPunchRec selects
 func (d *Dao) QueryPunchRec(c context.Context, record *model.PunchRec) (recs []*model.PunchRec, err error) {
-	return recs, d.DB.Model(&model.PunchRec{}).Where(record).Find(&recs).Error
+	return recs, d.DB.Model(&model.PunchRec{}).Where(record).Order("ctime desc").Find(&recs).Error
 }
 
 // QueryPunchRecBetween selects

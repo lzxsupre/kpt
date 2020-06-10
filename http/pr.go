@@ -22,11 +22,11 @@ func punchRecBetween(c abc.Context) {
 }
 
 func addPunchRec(c abc.Context) {
-	rec := &model.PunchRec{}
-	if err := c.Bind(rec); err != nil {
+	arg := &model.PunchRec{}
+	if err := c.Bind(arg); err != nil {
 		return
 	}
-	c.JSON(nil, svc.AddPunchRec(c, rec))
+	c.JSON(nil, svc.AddPunchRec(c, arg))
 }
 
 func deletePunchRec(c abc.Context) {

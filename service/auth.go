@@ -15,10 +15,10 @@ import (
 
 // Token 获取新 token
 func (s *Service) Token(c context.Context, arg *model.ArgAuth) (string, error) {
-	if !s.dao.CodeEqual(arg.Email, arg.Code) {
+	if !s.dao.CodeEqual(arg.Addr, arg.Code) {
 		return "", ecode.CodeNotMatch
 	}
-	user, err := s.dao.QueryUser(c, &model.User{Email: arg.Email})
+	user, err := s.dao.QueryUser(c, &model.User{Email: arg.Addr})
 	if err != nil {
 		return "", ecode.UserNotFound
 	}
@@ -34,5 +34,8 @@ func (s *Service) Code(c context.Context, addr string) error {
 	}
 	code := strings.Join(nums[:], "")
 	s.dao.CodeSet(addr, code)
-	return s.mailer.Send("验证码", fmt.Sprintf("您的验证码为 <strong>%s</strong>，10 分钟内有效，请勿转发。", code), []string{addr})
+	go func() {
+		s.mailer.Send(fmt.Sprintf("验证码: %s", code), fmt.Sprintf("您的验证码为 <strong>%s</strong>，10 分钟内有效，请勿转发。", code), []string{addr})
+	}()
+	return nil
 }

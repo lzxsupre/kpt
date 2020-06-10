@@ -9,7 +9,7 @@ import (
 
 // AddScanRec 添加一项门禁记录
 func (s *Service) AddScanRec(c context.Context, arg *model.ArgScanRec) error {
-	return s.dao.InsScanRec(c, arg.UID, arg.CID, strconv.FormatFloat(arg.Tpt, 'f', -1, 64))
+	return s.dao.InsScanRec(c, arg.UID, arg.Cid, strconv.FormatFloat(arg.Tpt, 'f', -1, 64))
 }
 
 // ScanRec 获取学号为id的门禁记录

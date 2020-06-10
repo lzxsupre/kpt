@@ -3,7 +3,7 @@ package model
 // ArgScanRec arg
 type ArgScanRec struct {
 	UID string  `json:"uid" validate:"required"`
-	CID string  `json:"cid" validate:"required"`
+	Cid string  `json:"cid" validate:"required"`
 	Tpt float64 `json:"tpt" validate:"required"`
 }
 
@@ -15,6 +15,6 @@ type ArgDateBetween struct {
 
 // ArgAuth arg
 type ArgAuth struct {
-	Code  string `form:"code"`
-	Email string `form:"email"`
+	Code string `form:"code"`
+	Addr string `form:"addr"`
 }

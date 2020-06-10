@@ -14,9 +14,9 @@ func (d *Dao) CodeSet(addr, code string) {
 }
 
 // CodeEqual code equals
-func (d *Dao) CodeEqual(addr, code string) bool {
+func (d *Dao) CodeEqual(addr, code string) (ok bool) {
 	if value := d.Cache.Get(fmt.Sprintf(keyCode, addr)); value != nil {
-		return value == code
+		ok = value.(string) == code
 	}
-	return false
+	return
 }
