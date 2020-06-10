@@ -16,5 +16,5 @@ type ArgDateBetween struct {
 // ArgAuth arg
 type ArgAuth struct {
 	Code string `form:"code"`
-	Addr string `form:"addr"`
+	UID  string `form:"uid"`
 }

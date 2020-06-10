@@ -15,10 +15,10 @@ func token(c abc.Context) {
 
 func code(c abc.Context) {
 	arg := new(struct {
-		Addr string `form:"addr"`
+		UID string `form:"uid"`
 	})
 	if err := c.Bind(arg); err != nil {
 		return
 	}
-	c.JSON(nil, svc.Code(c, arg.Addr))
+	c.JSON(nil, svc.Code(c, arg.UID))
 }

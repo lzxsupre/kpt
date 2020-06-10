@@ -9,7 +9,7 @@ type User struct {
 	Cid     string    `json:"cid" form:"cid"`
 	ClassID string    `json:"class_id" form:"class_id"`
 	Name    string    `json:"name" form:"name"`
-	Email   string    `json:"emial" form:"email"`
+	Email   string    `json:"email" form:"email"`
 	Status  int8      `json:"status" form:"status"`
 	Ctime   time.Time `json:"ctime" gorm:"-"`
 	Mtime   time.Time `json:"mtime" gorm:"-"`
