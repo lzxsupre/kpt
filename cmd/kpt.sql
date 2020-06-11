@@ -33,10 +33,12 @@ create table if not exists `user` (
 ) engine=innodb charset=utf8mb4;
 
 insert into `user`(`uid`,`cid`,`class_id`,`name`,`email`) values
-('2017213058','device_id_4','08051703','傅杰','1@xjj.pub'),
-('2017213053','device_id_3','08051703','高寅','2@xjj.pub'),
+('2017213058','device_id_4','08051703','傅杰','2879422120@qq.com'),
+('2017213053','device_id_3','08051703','高寅','948321185@qq.com'),
 ('2017213056','device_id_1','08051703','谢金锦','1366723936@qq.com'),
-('2017212576','device_id_2','08051704','王方诗','2898234819@qq.com');
+('2017212576','device_id_2','08051704','王方诗','2898234819@qq.com'),
+('2017213062','','','余威','842646529@qq.com'),
+('2017213057','','','姚政','942399715@qq.com');
 
 
 drop table if exists `punch_record`;
