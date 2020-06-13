@@ -15,7 +15,7 @@ func token(c abc.Context) {
 
 func code(c abc.Context) {
 	arg := new(struct {
-		Addr string `form:"addr"`
+		Addr string `form:"addr" validate:"required"`
 	})
 	if err := c.Bind(arg); err != nil {
 		return

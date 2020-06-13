@@ -3,19 +3,21 @@ services:
 
   db:
     image: mariadb
+    restart: always
     environment: 
       MYSQL_ROOT_PASSWORD: XJJ@none
       MYSQL_DATABASE: kpt
 
   adminer:
     image: adminer
+    restart: always
     ports:
       - 9999:8080
 
   web:
     build: .
+    restart: always
     ports: 
       - "8000:8000"
     volumes:
       - ./cmd:/go/src/github.com/mivinci/kpt/cmd
-    restart: always

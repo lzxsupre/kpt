@@ -27,9 +27,9 @@ func (s *Service) Token(c context.Context, arg *model.ArgAuth) (string, error) {
 
 // Code 发送邮件验证码
 func (s *Service) Code(c context.Context, addr string) error {
-	var nums [4]string
+	var nums [6]string
 	rand.Seed(time.Now().Unix())
-	for i, n := range rand.Perm(4) {
+	for i, n := range rand.Perm(6) {
 		nums[i] = strconv.Itoa(n)
 	}
 	code := strings.Join(nums[:], "")
