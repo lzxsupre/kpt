@@ -43,6 +43,11 @@ func routers(e *abc.Engine) {
 	ac.GET("/scan", scanRec)
 	ac.DELETE("/scan", deleteScanRec)
 
+	ac.POST("/rfid", addRFIDRec)
+	ac.POST("/temp", addTempRec)
+	ac.GET("/rfid", rfidRec)
+	ac.GET("/temp", tempRec)
+
 	pr := e.NewGroup("/pr", au.ServeHTTP)
 	pr.POST("/punch", addPunchRec)
 	pr.GET("/punch/between", punchRecBetween)

@@ -1,0 +1,23 @@
+<div>
+  <table>
+    <p>该生信息</p>
+    <tr>
+      <th>姓名</th>
+      <th>学号</th>
+      <th>班级</th>
+      <th>邮箱地址</th>
+    </tr>
+    <tr>
+      <td>{{.User.Name}}</td>
+      <td>{{.User.UID}}</td>
+      <td>{{.User.ClassID}}</td>
+      <td>{{.User.Email}}</td>
+    </tr>
+  </table>
+  <br/>
+  <br/>
+  <p>异常原因</p>
+  <p style="color: red;">{{.Reason}}</p>
+  <br/>
+  <p style="color: red;">请务必立刻将其逮捕隔离！</p>
+</div>
