@@ -28,10 +28,11 @@ func (s *Service) Token(c context.Context, arg *model.ArgAuth) (string, error) {
 
 // Code 发送邮件验证码
 func (s *Service) Code(c context.Context, uid string) error {
-	var nums [4]string
+	var nums [6]string
 	rand.Seed(time.Now().Unix())
-	for i, n := range rand.Perm(4) {
-		nums[i] = strconv.Itoa(n)
+	perms := rand.Perm(10)
+	for i := range nums {
+		nums[i] = strconv.Itoa(perms[i])
 	}
 	code := strings.Join(nums[:], "")
 
