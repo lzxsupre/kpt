@@ -5,7 +5,7 @@ import "github.com/mivinci/abc/time"
 // RFIDRec rfid record
 type RFIDRec struct {
 	ID    int       `json:"id"`
-	UID   string    `json:"uid"`
+	UID   string    `json:"uid" form:"uid" validate:"required"`
 	Rfid  string    `json:"rfid"`
 	Type  int8      `json:"type"`
 	Ctime time.Time `json:"ctime" gorm:"-"`

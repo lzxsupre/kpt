@@ -5,8 +5,8 @@ import "github.com/mivinci/abc/time"
 // TempRec temperature record
 type TempRec struct {
 	ID    int       `json:"id"`
-	UID   string    `json:"uid" validate:"required"`
-	Temp  float32   `json:"temp" validate:"required"`
+	UID   string    `json:"uid" form:"uid" validate:"required"`
+	Temp  float32   `json:"temp"`
 	Ctime time.Time `json:"ctime" gorm:"-"`
 }
 
