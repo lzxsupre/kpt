@@ -16,6 +16,24 @@ insert into `scan_record`(`uid`,`cid`,`tpt`,`ctime`) values
 ('1237','','36.6','2020-06-01 22:45:32'),
 ('1237','','36.1','2020-06-02 08:45:32');
 
+drop table if exists `rfid_record`;
+create table if not exists `rfid_record` (
+    `id` int unsigned auto_increment,
+    `uid` char(32) not null,
+    `rfid` char(32) not null,
+    `type` tinyint not null,
+    `ctime` datetime default current_timestamp,
+    primary key(`id`)
+) engine=innodb charset=utf8mb4;
+
+drop table if exists `temp_record`;
+create table if not exists `temp_record` (
+    `id` int unsigned auto_increment,
+    `uid` char(32) not null,
+    `temp` float not null,
+    `ctime` datetime default current_timestamp,
+    primary key(`id`)
+) engine=innodb charset=utf8mb4;
 
 drop table if exists `user`;
 create table if not exists `user` (

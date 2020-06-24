@@ -18,3 +18,10 @@ type ArgAuth struct {
 	Code string `form:"code"`
 	Addr string `form:"addr"`
 }
+
+// WarnEmail email
+type WarnEmail struct {
+	User   *User
+	Rec    *PunchRec
+	Reason string
+}

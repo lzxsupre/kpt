@@ -13,9 +13,12 @@
       <td>{{.User.UID}}</td>
       <td>{{.User.ClassID}}</td>
       <td>{{.User.Email}}</td>
+      {{ if .Rec }}
       <td>{{.Rec.Phone}}</td>
+      {{ end }}
     </tr>
   </table>
+  {{ if .Rec }}
   <p>本次异常打卡记录</p>
   <table>
     <tr>
@@ -39,5 +42,11 @@
       <td>{{.Rec.Location}}</td>
     </tr>
   </table>
+  {{ end }}
+  {{ if .Reason }}
+  <p>异常原因</p>
+  <p style="color: red;">{{.Reason}}</p>
+  <br/>
+  {{ end }}
   <p>请马上将其逮捕隔离！</p>
 </div>
