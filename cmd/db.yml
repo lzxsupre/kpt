@@ -1,2 +1,2 @@
-dsn: mivinci:XJJ@none@tcp(localhost:3306)/kpt?parseTime=true
+dsn: root:111111@tcp(localhost:3306)/kpt?parseTime=true
 timeout: "60ms"

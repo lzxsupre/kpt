@@ -4,7 +4,7 @@ services:
   db:
     image: mariadb
     environment: 
-      MYSQL_ROOT_PASSWORD: XJJ@none
+      MYSQL_ROOT_PASSWORD: "111111"
       MYSQL_DATABASE: kpt
 
   adminer:
