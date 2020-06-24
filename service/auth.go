@@ -2,6 +2,8 @@ package service
 
 import (
 	"context"
+	"crypto/sha256"
+	"encoding/hex"
 	"fmt"
 	"math/rand"
 	"strconv"
@@ -14,7 +16,7 @@ import (
 	"github.com/mivinci/kpt/model"
 )
 
-// Token 获取新 token
+// Token 获取用户访问token
 func (s *Service) Token(c context.Context, arg *model.ArgAuth) (string, error) {
 	if !s.dao.CodeEqual(arg.Addr, arg.Code) {
 		return "", ecode.CodeNotMatch
@@ -44,4 +46,29 @@ func (s *Service) Code(c context.Context, addr string) error {
 		}
 	}()
 	return nil
+}
+
+// AppToken 获取应用访问token
+func (s *Service) AppToken(c context.Context, app *model.App) (token string, err error) {
+	var origin *model.App
+	if origin, err = s.dao.QueryApp(c, app.AppID); err != nil {
+		log.Errorf("query app error(%v) appid(%s)\n", err, app.AppID)
+		return
+	}
+	if origin.UID != app.UID {
+		err = ecode.AppNotMatch
+		return
+	}
+	m := sha256.New()
+	m.Write([]byte(app.AppKey))
+	if origin.AppKey != hex.EncodeToString(m.Sum(nil)) {
+		err = ecode.AppNotMatch
+		return
+	}
+	dat := map[string]string{
+		"appid": app.AppID,
+		"uid":   app.UID,
+	}
+	token, err = auth.NewToken(s.c.Key.Secret, dat).String()
+	return
 }

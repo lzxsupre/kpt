@@ -36,8 +36,9 @@ func middleware(e *abc.Engine) {
 func routers(e *abc.Engine) {
 	e.GET("/token", token)
 	e.GET("/code", code)
+	e.GET("/apptoken", appToken)
 
-	ac := e.NewGroup("/ac")
+	ac := e.NewGroup("/ac", au.ServeHTTP)
 	ac.POST("/scan", addScanRec)
 	ac.GET("/scan/between", scanRecBetween)
 	ac.GET("/scan", scanRec)
@@ -54,11 +55,13 @@ func routers(e *abc.Engine) {
 	pr.GET("/punch", punchRec)
 	pr.DELETE("/punch", deletePunchRec)
 
-	user := e.NewGroup("/auth", au.ServeHTTP)
-	user.GET("/user", users)
-	user.PUT("/user", updateUser)
-	user.POST("/user", addUser)
-	user.DELETE("/user", deleteUser)
+	auth := e.NewGroup("/auth", au.ServeHTTP)
+	auth.GET("/user", users)
+	auth.PUT("/user", updateUser)
+	auth.POST("/user", addUser)
+	auth.DELETE("/user", deleteUser)
+	auth.GET("/app", apps)
+	auth.POST("/app", addApp)
 }
 
 func register(e *abc.Engine) {

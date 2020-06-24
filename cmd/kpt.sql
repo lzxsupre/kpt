@@ -58,6 +58,16 @@ insert into `user`(`uid`,`cid`,`class_id`,`name`,`email`) values
 ('2017213062','','','余威','842646529@qq.com'),
 ('2017213057','','','姚政','942399715@qq.com');
 
+drop table if exists `app`;
+create table if not exists `app` (
+    `app_id` varchar(48),
+    `app_key` varchar(255),
+    `uid` char(32),
+    `ctime` datetime default current_timestamp,
+    primary key (`app_id`),
+    unique (`app_key`)
+) engine=innodb charset=utf8mb4;
+
 
 drop table if exists `punch_record`;
 create table if not exists `punch_record` (
