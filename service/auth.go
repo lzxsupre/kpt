@@ -23,7 +23,7 @@ func (s *Service) Token(c context.Context, arg *model.ArgAuth) (string, error) {
 	if err != nil {
 		return "", ecode.UserNotFound
 	}
-	return auth.NewToken(s.c.Key.Secret, arg.Addr, auth.WithPerm(user.Status)).String()
+	return auth.NewToken(s.c.Key.Secret, user.UID, auth.WithPerm(user.Status)).String()
 }
 
 // Code 发送邮件验证码
