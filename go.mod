@@ -7,4 +7,5 @@ require (
 	github.com/jinzhu/gorm v1.9.12
 	github.com/mivinci/abc v0.0.11
 	github.com/mivinci/aladin v0.0.1
+	github.com/lithammer/shortuuid v3.0.0+incompatible
 )
