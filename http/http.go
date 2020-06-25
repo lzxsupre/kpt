@@ -47,7 +47,9 @@ func routers(e *abc.Engine) {
 	ac.POST("/rfid", addRFIDRec)
 	ac.POST("/temp", addTempRec)
 	ac.GET("/rfid", rfidRec)
+	ac.GET("/rfid/today", rfidToday)
 	ac.GET("/temp", tempRec)
+	ac.GET("/temp/today", tempRecToday)
 
 	pr := e.NewGroup("/pr", au.ServeHTTP)
 	pr.POST("/punch", addPunchRec)
@@ -62,6 +64,10 @@ func routers(e *abc.Engine) {
 	auth.DELETE("/user", deleteUser)
 	auth.GET("/app", apps)
 	auth.POST("/app", addApp)
+
+	stat := e.NewGroup("/stat")
+	stat.GET("/temp", statTemp)
+	stat.GET("/notemp", statUserWithNoTempRecToday)
 }
 
 func register(e *abc.Engine) {

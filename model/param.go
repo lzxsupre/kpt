@@ -18,3 +18,25 @@ type ArgAuth struct {
 	Code string `form:"code"`
 	UID  string `form:"uid"`
 }
+
+// ArgRFIDRec arg
+type ArgRFIDRec struct {
+	UID  string `json:"uid" form:"uid"`
+	Rfid string `json:"rfid" form:"rfid"`
+	Type int8   `json:"type" form:"type"`
+}
+
+// TableName table name
+func (ArgRFIDRec) TableName() string {
+	return "rfid_record"
+}
+
+// ArgTempRec arg
+type ArgTempRec struct {
+	UID string `form:"uid"`
+}
+
+// TableName table name
+func (ArgTempRec) TableName() string {
+	return "temp_record"
+}

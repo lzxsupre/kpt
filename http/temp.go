@@ -20,3 +20,11 @@ func tempRec(c abc.Context) {
 	}
 	c.JSON(svc.TempRec(c, arg))
 }
+
+func tempRecToday(c abc.Context) {
+	arg := &model.ArgTempRec{}
+	if err := c.Bind(arg); err != nil {
+		return
+	}
+	c.JSON(svc.TempRecToday(c, arg))
+}

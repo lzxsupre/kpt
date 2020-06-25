@@ -35,11 +35,16 @@ func (s *Service) RFIDOutNotaionSend(c context.Context, uid string) error {
 		return err
 	}
 
-	body := fmt.Sprintf("检测到您在 %s 刷卡外出。在外注意防护，戴好口罩 :)", time.Now().Format("2006-01-02 15:04:05"))
+	body := fmt.Sprintf("同学您好，您在 %s 刷卡外出。在外注意防护，并在宵禁前返校 :)", time.Now().Format("2006-01-02 15:04:05"))
 
 	if err = s.mailer.Send("您已成功刷卡外出", body, []string{user.Email}); err != nil {
 		log.Errorf("send email error(%v)\n", err)
 		return err
 	}
 	return nil
+}
+
+// RFIDRecToday 获取今天的门禁记录
+func (s *Service) RFIDRecToday(c context.Context, record *model.ArgRFIDRec) ([]*model.RFIDRec, error) {
+	return s.dao.QueryRFIDRecToday(c, record)
 }
