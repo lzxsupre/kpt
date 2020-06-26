@@ -167,7 +167,7 @@ func (s *Service) StatUserWithNoRFIDRecInToday(c context.Context, warn bool) (st
 	}
 	if warn {
 		go func() {
-			if e := s.mailer.Send("未归寝提醒", "您在当天23:00点前没有归寝打卡记录，请及时在寝室门禁处打卡！如有问题请联系QQ(1366723936)", addrs); e != nil {
+			if e := s.mailer.Send("未返校提醒", "同学您好，发现您在当天23:00点前没有返校打卡记录，请在宵禁前返校！", addrs); e != nil {
 				log.Errorf("send email error(%v)\n", err)
 			}
 		}()
