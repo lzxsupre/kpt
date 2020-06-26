@@ -69,7 +69,7 @@ func routers(e *abc.Engine) {
 	stat.GET("/temp", statTemp)
 	stat.GET("/notemp", statUserWithNoTempRecToday)
 	stat.GET("/rfid/last", statLastRFIDRec)
-	stat.GET("/rfid/mochkin", statUserWithNoRFIDRecInToday)
+	stat.GET("/rfid/nochkin", statUserWithNoRFIDRecInToday)
 }
 
 func register(e *abc.Engine) {
