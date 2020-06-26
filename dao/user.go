@@ -34,3 +34,8 @@ func (d *Dao) QueryUser(c context.Context, user *model.User) (res *model.User, e
 	err = d.DB.Model(&model.User{}).Where(user).First(res).Error
 	return
 }
+
+// QueryUsersByUIDs selects
+func (d *Dao) QueryUsersByUIDs(c context.Context, uids []string) (users []*model.User, err error) {
+	return users, d.DB.Model(&model.User{}).Where("uid IN (?)", uids).Find(&users).Error
+}

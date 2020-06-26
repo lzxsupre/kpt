@@ -68,6 +68,8 @@ func routers(e *abc.Engine) {
 	stat := e.NewGroup("/stat")
 	stat.GET("/temp", statTemp)
 	stat.GET("/notemp", statUserWithNoTempRecToday)
+	stat.GET("/rfid/last", statLastRFIDRec)
+	stat.GET("/rfid/mochkin", statUserWithNoRFIDRecInToday)
 }
 
 func register(e *abc.Engine) {

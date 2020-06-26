@@ -7,6 +7,11 @@ import (
 	"github.com/mivinci/kpt/model"
 )
 
+const (
+	chkOut = 1 + iota
+	chkIn
+)
+
 //StatTempRecToday get_today_temp_data
 func (s *Service) StatTempRecToday(c context.Context) (*model.StatTempRec, error) {
 	records, err := s.TempRecToday(c, &model.ArgTempRec{})
@@ -84,6 +89,85 @@ func (s *Service) StatUserWithNoTempRecToday(c context.Context, warn bool) (resp
 	if warn {
 		go func() {
 			if e := s.mailer.Send("提醒未测体温", "同学您好，您今日未测体温，请尽快去门禁处测量体温", addrs); e != nil {
+				log.Errorf("send email error(%v)\n", err)
+			}
+		}()
+	}
+	return
+}
+
+// StatLastRFIDRec 获取当天刷门禁的用户的最后记录
+func (s *Service) StatLastRFIDRec(c context.Context) (stat *model.StatLastRFIDRec, err error) {
+	records, err := s.RFIDRecToday(c, &model.ArgRFIDRec{})
+	if err != nil {
+		log.Errorf("query rfid record error(%v)\n", err)
+		return
+	}
+
+	stat = &model.StatLastRFIDRec{
+		Total: len(records),
+		Out:   make(map[string]*model.RFIDRec),
+		In:    make(map[string]*model.RFIDRec),
+	}
+
+	for _, record := range records {
+		switch record.Type {
+		case chkIn:
+			if rec, ok := stat.In[record.UID]; ok {
+				if rec.Ctime < record.Ctime {
+					rec.Ctime = record.Ctime
+				}
+				continue
+			}
+			stat.In[record.UID] = record
+			continue
+		case chkOut:
+			if rec, ok := stat.Out[record.UID]; ok {
+				if rec.Ctime < record.Ctime {
+					rec.Ctime = record.Ctime
+				}
+			}
+			stat.Out[record.UID] = record
+			continue
+		default:
+		}
+	}
+	return
+}
+
+// StatUserWithNoRFIDRecInToday 获取当天未刷进的用户
+func (s *Service) StatUserWithNoRFIDRecInToday(c context.Context, warn bool) (stat []*model.StatUserNoCheckIn, err error) {
+	var (
+		// 未刷入用户的 UID
+		uids    []string
+		addrs   []string
+		users   []*model.User
+		lastRec *model.StatLastRFIDRec
+	)
+	if lastRec, err = s.StatLastRFIDRec(c); err != nil {
+		return
+	}
+	for uid, out := range lastRec.Out {
+		if in, ok := lastRec.In[uid]; !ok {
+			uids = append(uids, out.UID)
+
+		} else if in.Ctime < out.Ctime {
+			uids = append(uids, out.UID)
+		}
+	}
+	if users, err = s.dao.QueryUsersByUIDs(c, uids); err != nil {
+		return
+	}
+	for _, user := range users {
+		stat = append(stat, &model.StatUserNoCheckIn{
+			User:         user,
+			LastCheckout: lastRec.Out[user.UID].Ctime,
+		})
+		addrs = append(addrs, user.Email)
+	}
+	if warn {
+		go func() {
+			if e := s.mailer.Send("未归寝提醒", "您在当天23:00点前没有归寝打卡记录，请及时在寝室门禁处打卡！如有问题请联系QQ(1366723936)", addrs); e != nil {
 				log.Errorf("send email error(%v)\n", err)
 			}
 		}()
