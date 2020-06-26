@@ -55,8 +55,8 @@ func (s *Service) isTempOK(t float32) bool {
 	return true
 }
 
-//StatUserWithnoTempRecToday get_today_user_nontemp
-func (s *Service) StatUserWithNoTempRecToday(c context.Context) (resp []*model.User, err error) {
+//StatUserWithNoTempRecToday get_today_user_nontemp
+func (s *Service) StatUserWithNoTempRecToday(c context.Context, warn bool) (resp []*model.User, err error) {
 	users, err := s.dao.QueryUsers(c, &model.User{})
 	if err != nil {
 		log.Errorf("query all users error(%v)\n", err)
@@ -72,10 +72,21 @@ func (s *Service) StatUserWithNoTempRecToday(c context.Context) (resp []*model.U
 		recs[record.UID] = struct{}{}
 	}
 
+	var addrs []string
+
 	for _, user := range users.Users {
 		if _, ok := recs[user.UID]; !ok {
 			resp = append(resp, user)
+			addrs = append(addrs, user.Email)
 		}
+	}
+
+	if warn {
+		go func() {
+			if e := s.mailer.Send("提醒未测体温", "同学您好，您今日未测体温，请尽快去门禁处测量体温", addrs); e != nil {
+				log.Errorf("send email error(%v)\n", err)
+			}
+		}()
 	}
 	return
 }
