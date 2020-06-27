@@ -90,21 +90,3 @@ insert into `punch_record`(`uid`,`name`,`phone`,`location`,`is_temperature_ok`,`
 ('2017213033','刘泽兴','15285631325','重庆市南岸区重庆邮电大学',1,0,0,0,1,1);
 
 
-drop table if exists `punch_record`;
-create table if not exists `punch_record` (
-    `id` int(11) unsigned auto_increment primary key,
-    `uid` char(12) not null,
-    `name` varchar(8) not null,
-    `phone` varchar(12) not null, 
-    `location` varchar(128) not null,
-    `is_temp_ok` boolean not null,
-    `is_uncom` boolean not null,
-    `is_def` boolean not null,
-    `is_his` boolean not null,
-    `is_lef` boolean not null,
-    `is_bac` boolean not null,
-    `ctime` datetime default current_timestamp 
-) engine=innodb charset=utf8mb4;
-
-insert into `punch_record`(`uid`,`name`,`phone`,`location`,`is_temp_ok`,`is_uncom`,`is_def`,`is_his`,`is_lef`,`is_bac`) values
-('2017213033','刘泽兴','15285631325','重庆市南岸区重庆邮电大学',1,0,0,0,1,1);

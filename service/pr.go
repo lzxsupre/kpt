@@ -21,6 +21,9 @@ func (s *Service) PunchRecBetween(c context.Context, arg *model.ArgDateBetween) 
 
 // AddPunchRec 添加一条打卡记录
 func (s *Service) AddPunchRec(c context.Context, rec *model.PunchRec) error {
+	if !rec.IsTemperatureOK {
+		go s.PunchRecWarn(c, rec)
+	}
 	return s.dao.AddPunchRec(c, rec)
 }
 
