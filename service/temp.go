@@ -19,7 +19,7 @@ func (s *Service) TempRecToday(c context.Context, record *model.ArgTempRec) ([]*
 	return s.dao.TempRecToday(c, record)
 }
 
-// AddTempRec 添加一条门禁记录
+// AddTempRec 添加一条温度记录
 func (s *Service) AddTempRec(c context.Context, record *model.TempRec) error {
 	if record.Temp > s.c.Bus.Threhold.MaxTemp || record.Temp < s.c.Bus.Threhold.MinTemp {
 		go s.TempRecWarn(c, record)
