@@ -46,7 +46,7 @@ func (s *Service) Code(c context.Context, uid string) error {
 	s.dao.CodeSet(uid, code)
 
 	go func() {
-		err := s.mailer.Send(fmt.Sprintf("验证码: %s", code), fmt.Sprintf("您的验证码为 <strong>%s</strong>，10 分钟内有效，请勿转发。", code), []string{user.Email})
+		err := s.mailer.Send(fmt.Sprintf("验证码: %s", code), fmt.Sprintf("您的验证码为 <strong>%s</strong>，10 分钟内有效，打死也不能告诉别人！", code), []string{user.Email})
 		log.Infof("email send eror(%v)", err)
 	}()
 	return nil

@@ -88,7 +88,7 @@ func (s *Service) StatUserWithNoTempRecToday(c context.Context, warn bool) (resp
 
 	if warn {
 		go func() {
-			if e := s.mailer.Send("提醒未测体温", "同学您好，您今日未测体温，请尽快去门禁处测量体温", addrs); e != nil {
+			if e := s.mailer.Send("未测体温提醒", "同学您好，您今日未测体温，请尽快去门禁处测量体温，否则退学处理！", addrs); e != nil {
 				log.Errorf("send email error(%v)\n", err)
 			}
 		}()
@@ -167,7 +167,7 @@ func (s *Service) StatUserWithNoRFIDRecInToday(c context.Context, warn bool) (st
 	}
 	if warn {
 		go func() {
-			if e := s.mailer.Send("未返校提醒", "同学您好，发现您在当天23:00点前没有返校打卡记录，请在宵禁前返校！", addrs); e != nil {
+			if e := s.mailer.Send("未返校提醒", "同学您好，发现您在当天23点前没有返校打卡记录，请在宵禁前返校，否则退学处理！", addrs); e != nil {
 				log.Errorf("send email error(%v)\n", err)
 			}
 		}()
