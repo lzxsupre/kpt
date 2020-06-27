@@ -51,10 +51,8 @@ create table if not exists `user` (
 ) engine=innodb charset=utf8mb4;
 
 insert into `user`(`uid`,`cid`,`class_id`,`name`,`email`) values
-('2017213058','device_id_4','08051703','傅杰','1@xjj.pub'),
-('2017213053','device_id_3','08051703','高寅','2@xjj.pub'),
-('2017213056','device_id_1','08051703','谢金锦','1366723936@qq.com'),
-('2017212576','device_id_2','08051704','王方诗','2898234819@qq.com');
+('2017213034','device_id_34','08051703','刘泽兴','1322580533@qq.com'),
+('2017213033','device_id_33','08051703','范铭贤','793414991@qq.com');
 
 
 DROP TABLE IF EXISTS `app`;
@@ -89,4 +87,24 @@ create table if not exists `punch_record` (
 ) engine=innodb charset=utf8mb4;
 
 insert into `punch_record`(`uid`,`name`,`phone`,`location`,`is_temperature_ok`,`did_meet_hubei`,`has_symptom`,`is_family_diagnosed`,`did_meet_diagnoses`,`is_family_suspected`) values
-('2017213053','高寅','17784450780','重庆市南岸区重庆邮电大学',1,0,0,0,0,0);
+('2017213033','刘泽兴','15285631325','重庆市南岸区重庆邮电大学',1,0,0,0,1,1);
+
+
+drop table if exists `punch_record`;
+create table if not exists `punch_record` (
+    `id` int(11) unsigned auto_increment primary key,
+    `uid` char(12) not null,
+    `name` varchar(8) not null,
+    `phone` varchar(12) not null, 
+    `location` varchar(128) not null,
+    `is_temp_ok` boolean not null,
+    `is_uncom` boolean not null,
+    `is_def` boolean not null,
+    `is_his` boolean not null,
+    `is_lef` boolean not null,
+    `is_bac` boolean not null,
+    `ctime` datetime default current_timestamp 
+) engine=innodb charset=utf8mb4;
+
+insert into `punch_record`(`uid`,`name`,`phone`,`location`,`is_temp_ok`,`is_uncom`,`is_def`,`is_his`,`is_lef`,`is_bac`) values
+('2017213033','刘泽兴','15285631325','重庆市南岸区重庆邮电大学',1,0,0,0,1,1);
