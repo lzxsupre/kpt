@@ -24,6 +24,18 @@ func (s *Service) AddPunchRec(c context.Context, rec *model.PunchRec) error {
 	if !rec.IsTemperatureOK {
 		go s.PunchRecWarn(c, rec)
 	}
+	if rec.DidMeetHubei {
+		go s.PunchRecWarn(c, rec)
+	}
+	if rec.HasSymptom {
+		go s.PunchRecWarn(c, rec)
+	}
+	if rec.IsFamilyDiagnosed {
+		go s.PunchRecWarn(c, rec)
+	}
+	if rec.DidMeetDiagnoses {
+		go s.PunchRecWarn(c, rec)
+	}
 	return s.dao.AddPunchRec(c, rec)
 }
 
