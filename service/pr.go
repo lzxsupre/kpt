@@ -83,7 +83,7 @@ func (s *Service) PunchRecWarn(c context.Context, record *model.PunchRec) error 
 //ReasonSelect 返回异常原因
 func ReasonSelect(record *model.PunchRec) string {
 	re := ""
-	if record.IsTemperatureOK {
+	if !record.IsTemperatureOK {
 		re = re + "  体温异常"
 	}
 	if record.DidMeetHubei {
